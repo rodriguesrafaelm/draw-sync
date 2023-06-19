@@ -13,13 +13,12 @@ const corsOptions = ({
 })
 
 const io = new Server(http, corsOptions)
-
 let history = []
 
 io.on("connection", (socket) => {
 
     const syncState = () => {
-        history.forEach((line) => socket.emit('draw', line))
+        history.forEach((line) => io.emit('draw', line))
     }
     syncState()
 
@@ -36,7 +35,7 @@ io.on("connection", (socket) => {
         if(history[history.length -1]?.actionId > 0){
             const lastItemId = history[history.length-1].actionId
             io.emit('draw')
-            history = history.filter((item) => item.owner != socket.id || item.actionId < lastItemId)
+            history = history.filter((item) => (item.owner != socket.id || item.actionId < lastItemId))
             syncState()
         }   
         

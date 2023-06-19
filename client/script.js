@@ -52,7 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         pencil.posAfter = { x: pencil.posCurrent.x, y: pencil.posCurrent.y}
     
-        setTimeout(cycle, 10)
+        setTimeout(draw_cycle(), 10)
       }
     
     draw_cycle()    

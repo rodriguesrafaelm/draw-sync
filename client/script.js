@@ -12,8 +12,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvas = document.getElementById("board")
     canvas.width = 1000
     canvas.height = 600
-
-
     const context = canvas.getContext('2d')
     context.lineWidth = 3
     context.strokeStyle = 'teal'
@@ -27,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         else {
             context.clearRect(0, 0, canvas.width, canvas.height)
-            pencil.actionId = 0
         }
     }
 
@@ -56,7 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         pencil.posAfter = { x: pencil.posCurrent.x, y: pencil.posCurrent.y}
     
-        setTimeout(draw_cycle, 10)
+        requestAnimationFrame(draw_cycle)
       }
     
     draw_cycle()    

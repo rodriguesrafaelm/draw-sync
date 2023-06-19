@@ -1,0 +1,56 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  box-sizing: border-box;
+}
+
+.mainDiv{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+}
+
+.canvasContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.canvas {
+    width: 1000px;
+    height: 600px;
+    border: 2px solid teal;
+    border-radius: 3px;
+    cursor: crosshair;
+  }
+
+  .buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+.buttons button {
+  padding: 10px 20px;
+  width: 30%;
+  border: none;
+  border-radius: 3px;
+  background-color: #0077b6;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.buttons button:hover {
+  background-color: #005a8d;
+}
+
+.buttons button:not(:last-child) {
+  margin-right: 10px;
+}

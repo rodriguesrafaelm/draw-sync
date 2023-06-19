@@ -10,7 +10,16 @@
 
 </head>
 <body>
-    <canvas id="canvas"></canvas>
-    <button onclick="handleClear()">Limpar Tela</button>
+    <div class="mainDiv">
+        <div class="canvasContainer">
+            <div>
+                <canvas id="board" class="canvas"></canvas>
+                <div class="buttons">
+                    <button onclick="handleClear()">Limpar Tela</button>
+                    <button onclick="handleUndoLast()">undo last</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

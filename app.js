@@ -18,19 +18,33 @@ let history = []
 
 io.on("connection", (socket) => {
 
-    history.forEach((line) => socket.emit('draw', line))
+    const syncState = () => {
+        history.forEach((line) => socket.emit('draw', line))
+    }
+    syncState()
 
     socket.on('clear', () => {
         history = []
         io.emit('draw')
     })
     socket.on('draw', (line) => {
+        line.owner = socket.id
         history.push(line)
         io.emit('draw', line)
-        console.log(line)
+    })
+    socket.on('undoLast', () => {
+        if(history[history.length -1]?.actionId > 0){
+            const lastItemId = history[history.length-1].actionId
+            io.emit('draw')
+            history = history.filter((item) => item.owner != socket.id || item.actionId < lastItemId)
+            syncState()
+        }   
+        
     })
 } )
 
+// const desiredId = 2
+// const novaLista = lista.filter((item) => item.actionId <= 2)
 
 http.listen(3000, () => {
     console.log("conectado na porta 3000")

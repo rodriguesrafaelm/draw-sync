@@ -5,10 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
         active: false,
         move: false,
         posCurrent: {x:0, y:0},
-        posAfter: null
+        posAfter: null,
+        actionId: 0
     }
 
-    const canvas = document.querySelector("#canvas")
+    const canvas = document.getElementById("board")
     canvas.width = 1000
     canvas.height = 600
 
@@ -26,18 +27,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         else {
             context.clearRect(0, 0, canvas.width, canvas.height)
+            pencil.actionId = 0
         }
     }
 
     canvas.onmousedown = () => {
+        pencil.actionId += 1
         pencil.active = true
     }
     canvas.onmouseup = () => {
         pencil.active = false
     }
     canvas.onmousemove = (event) => {
-        pencil.posCurrent.x = event.clientX
-        pencil.posCurrent.y = event.clientY
+        const canvasRect = canvas.getBoundingClientRect();
+        pencil.posCurrent.x = event.clientX - canvasRect.left;
+        pencil.posCurrent.y = event.clientY - canvasRect.top;
         pencil.move = true
     }
 
@@ -47,12 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const draw_cycle = () => {
         if (pencil.active && pencil.move && pencil.posAfter){
-          socket.emit('draw', {posCurrent: pencil.posCurrent, posAfter: pencil.posAfter})
+          socket.emit('draw', {posCurrent: pencil.posCurrent, posAfter: pencil.posAfter, actionId: pencil.actionId })
           pencil.move = false
         }
         pencil.posAfter = { x: pencil.posCurrent.x, y: pencil.posCurrent.y}
     
-        setTimeout(draw_cycle(), 10)
+        setTimeout(draw_cycle, 10)
       }
     
     draw_cycle()    
@@ -61,3 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
 const handleClear = () => {
     socket.emit('clear')
 }
+
+const handleUndoLast = () => {
+    socket.emit('undoLast')
+  };

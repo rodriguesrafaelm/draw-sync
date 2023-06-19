@@ -34,6 +34,10 @@ npm install
 ```
 5. Para iniciar o servidor digite:
 ```bash
+npm start
+```
+ou
+```bash
 node server.js
 ```
 6. Abra um navegador da web e acesse http://localhost:3000 para iniciar o Draw Sync.
